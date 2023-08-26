@@ -46,7 +46,7 @@ const Register = () => {
       }
     } catch (err: any) {
       console.error(err);
-      if (err?.response?.data?.error.keyPattern.email) {
+      if (err?.response?.data?.error?.keyPattern?.email) {
         enqueueSnackbar("Email already exists. Try Signing in", {
           variant: "error",
         });
