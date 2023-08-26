@@ -1,6 +1,8 @@
 import axios from "axios";
 
 axios.defaults.withCredentials = true;
+axios.defaults.headers.post["Content-Type"] =
+  "application/x-www-form-urlencoded";
 axios.defaults.baseURL =
   process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:5000/";
 
