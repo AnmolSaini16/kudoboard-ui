@@ -55,7 +55,7 @@ const Dashboard = () => {
   const handleShareClick = () => {
     // Todo: change to deployed link
     navigator.clipboard.writeText(
-      `http://localhost:3000/boards/${boardId}?view=true`
+      `https://kudoboard.vercel.app/boards/${boardId}?view=true`
     );
     enqueueSnackbar("Link copied", { variant: "success" });
     handleClose();
