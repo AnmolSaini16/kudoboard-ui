@@ -13,8 +13,8 @@ import {
   IconButton,
   CardMedia,
   ListItemText,
+  Link,
 } from "@mui/material";
-import Link from "next/link";
 import React, { useContext, useState } from "react";
 import { dateFormatter } from "../common/utils";
 import { AppContext, AppContextType } from "@/context/AppContext";
