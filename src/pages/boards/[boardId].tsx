@@ -1,4 +1,4 @@
-import { getBoard, useGetBoardData } from "@/api/boardApi";
+import { useGetBoardData } from "@/api/boardApi";
 import { GetServerSidePropsContext } from "next";
 import React from "react";
 import { QueryClient, dehydrate } from "@tanstack/react-query";
@@ -7,6 +7,7 @@ import { IBoard } from "@/interfaces/BoardInterface";
 import { NavHeader } from "@/components/common/NavHeader";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]";
+import axios from "axios";
 
 const Board = ({
   boardId,
@@ -16,7 +17,7 @@ const Board = ({
   isLoggedIn: boolean;
 }) => {
   const { data, isLoading: boardLoading } = useGetBoardData(boardId);
-  const boardData: IBoard = data;
+  const boardData: IBoard = data?.data;
 
   return (
     <>
@@ -38,10 +39,13 @@ export const getServerSideProps = async (
   const queryClient = new QueryClient();
 
   try {
-    await queryClient.fetchQuery(
-      ["GetBoardData", boardId],
-      async () => await getBoard(boardId)
-    );
+    await queryClient.fetchQuery(["GetBoardData", boardId], async () => {
+      const data = await axios.get(
+        `${process.env.NEXTAUTH_URL || "http://localhost:5000"}` +
+          `/api/board/${boardId}`
+      );
+      return data?.data;
+    });
   } catch (error: any) {
     if (error?.response?.status === 404) {
       return {

@@ -17,6 +17,7 @@ export const NavHeader = ({
 
   const handleLogout = async () => {
     await signOut({ redirect: false });
+    localStorage.clear();
     router.push({
       pathname: "/auth/login",
       query: { redirectUrl: redirectUrl ?? "/" },

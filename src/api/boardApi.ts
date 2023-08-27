@@ -1,4 +1,3 @@
-import axios from "axios";
 import { deleteData, getData, postData } from "./commonAPI";
 import { useQuery } from "@tanstack/react-query";
 
@@ -19,14 +18,9 @@ export const createBoard = async ({
 export const useGetBoardData = (boardId: string) => {
   return useQuery({
     queryKey: ["GetBoardData", boardId],
-    queryFn: async () => await getBoard(boardId),
+    queryFn: async () => await getData(`/api/board/${boardId}`),
     refetchOnWindowFocus: false,
   });
-};
-
-export const getBoard = async (boardID: any) => {
-  const data = await getData(`/api/board/${boardID}`);
-  return data?.data;
 };
 
 export const useGetAllBoards = (id: string) => {

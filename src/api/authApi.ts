@@ -13,7 +13,7 @@ export const registerUser = async ({
 
 export const getCurrentUser = (session: Session | null) => {
   return useQuery(
-    ["GetCurrentUser"],
+    ["GetCurrentUser", session?.user?.email],
     async () => await getData("/api/auth/getCurrentUser"),
     {
       staleTime: Infinity,
