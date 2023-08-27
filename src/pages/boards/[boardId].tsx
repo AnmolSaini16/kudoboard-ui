@@ -21,8 +21,12 @@ const Board = ({
 
   return (
     <>
-      <NavHeader isLoggedIn={isLoggedIn} redirectUrl={`/boards/${boardId}`} />
-      <BoardContainer board={boardData} boardLoading={boardLoading} />
+      <BoardContainer
+        board={boardData}
+        boardLoading={boardLoading}
+        boardId={boardId}
+        isLoggedIn={isLoggedIn}
+      />
     </>
   );
 };
