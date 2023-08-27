@@ -13,6 +13,9 @@ import { useSnackbar } from "notistack";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
+import { GetServerSidePropsContext } from "next";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]";
 
 const Register = () => {
   const router = useRouter();
@@ -163,5 +166,22 @@ const Register = () => {
   );
 };
 
-//Already have an account? Sign in
 export default Register;
+
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const session = await getServerSession(context.req, context.res, authOptions);
+  const isLoggedIn = !!session;
+
+  if (isLoggedIn) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  return { props: { isLoggedIn } };
+};

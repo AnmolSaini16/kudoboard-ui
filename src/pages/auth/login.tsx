@@ -7,12 +7,15 @@ import {
   Button,
   CircularProgress,
 } from "@mui/material";
+import { GetServerSidePropsContext } from "next";
+import { getServerSession } from "next-auth";
 import { signIn } from "next-auth/react";
 
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
+import { authOptions } from "../api/auth/[...nextauth]";
 
 const Login = () => {
   const router = useRouter();
@@ -144,3 +147,21 @@ const Login = () => {
 };
 
 export default Login;
+
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const session = await getServerSession(context.req, context.res, authOptions);
+  const isLoggedIn = !!session;
+
+  if (isLoggedIn) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  return { props: { isLoggedIn } };
+};

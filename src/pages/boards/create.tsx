@@ -1,12 +1,22 @@
 import { CreateBoardForm } from "@/components/board/CreateBoardForm";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
+import { GetServerSidePropsContext } from "next";
+import { getServerSession } from "next-auth";
 import Image from "next/image";
+import { authOptions } from "../api/auth/[...nextauth]";
+import Link from "next/link";
 
-export default function CreateBoard() {
+export default function CreateBoard({ isLoggedIn }: { isLoggedIn: boolean }) {
   return (
     <Box sx={{ width: "100%", height: "100%" }}>
       <Grid container sx={{ height: "100vh" }}>
-        <Box component={Grid} item md={6} xs={12}>
+        <Box
+          component={Grid}
+          item
+          display={{ xs: "none", sm: "block" }}
+          md={6}
+          xs={12}
+        >
           <Box
             sx={{
               backgroundColor: "#04BFFA",
@@ -53,10 +63,39 @@ export default function CreateBoard() {
             alignItems="center"
             justifyContent="center"
           >
-            <CreateBoardForm />
+            {!isLoggedIn ? (
+              <Box m={2}>
+                <Typography variant="h6" fontWeight={700} color="secondary">
+                  Please Sign in or Register a new account to create a kudoboard
+                </Typography>
+                <Box textAlign="center" mt={2}>
+                  <Link
+                    href={{
+                      pathname: "/auth/login",
+                      query: { redirectUrl: "/boards/create" },
+                    }}
+                  >
+                    <Button variant="contained" color="primary">
+                      Sign In
+                    </Button>
+                  </Link>
+                </Box>
+              </Box>
+            ) : (
+              <CreateBoardForm />
+            )}
           </Box>
         </Grid>
       </Grid>
     </Box>
   );
 }
+
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const session = await getServerSession(context.req, context.res, authOptions);
+  const isLoggedIn = !!session;
+
+  return { props: { isLoggedIn } };
+};
