@@ -5,6 +5,8 @@ import { QueryClient, dehydrate } from "@tanstack/react-query";
 import { BoardContainer } from "@/components/board/BoardContainer";
 import { IBoard } from "@/interfaces/BoardInterface";
 import { NavHeader } from "@/components/common/NavHeader";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]";
 
 const Board = ({
   boardId,
@@ -29,11 +31,8 @@ export default Board;
 export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
-  let isLoggedIn = false;
-  const authCookie = context?.req.cookies["access_token"] ?? null;
-  if (authCookie) {
-    isLoggedIn = true;
-  }
+  const session = await getServerSession(context.req, context.res, authOptions);
+  const isLoggedIn = !!session;
 
   const boardId = context?.query?.boardId;
   const queryClient = new QueryClient();
@@ -44,7 +43,7 @@ export const getServerSideProps = async (
       async () => await getBoard(boardId)
     );
   } catch (error: any) {
-    if (error.response.status === 404) {
+    if (error?.response?.status === 404) {
       return {
         redirect: {
           destination: "/404",

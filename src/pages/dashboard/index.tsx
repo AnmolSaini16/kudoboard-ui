@@ -1,7 +1,8 @@
 import { NavHeader } from "@/components/common/NavHeader";
 import Dashboard from "@/components/dashboard/Dashboard";
 import { GetServerSidePropsContext } from "next";
-import { redirect } from "next/dist/server/api-utils";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]";
 
 const DashBoard = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
   return (
@@ -17,11 +18,8 @@ export default DashBoard;
 export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
-  let isLoggedIn = false;
-  const authCookie = context?.req.cookies["access_token"] ?? null;
-  if (authCookie) {
-    isLoggedIn = true;
-  }
+  const session = await getServerSession(context.req, context.res, authOptions);
+  const isLoggedIn = !!session;
 
   if (!isLoggedIn) {
     return {

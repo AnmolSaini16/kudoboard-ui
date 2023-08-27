@@ -1,5 +1,5 @@
-import { logOut } from "@/api/authApi";
-import { Box, AppBar, Typography, Button, Grid } from "@mui/material";
+import { Box, Typography, Button, Grid } from "@mui/material";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
@@ -16,9 +16,7 @@ export const NavHeader = ({
   const router = useRouter();
 
   const handleLogout = async () => {
-    // add mutation adn try catch
-    await logOut();
-    localStorage.clear();
+    await signOut({ redirect: false });
     router.push({
       pathname: "/auth/login",
       query: { redirectUrl: redirectUrl ?? "/" },

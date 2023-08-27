@@ -1,4 +1,3 @@
-import { logIn } from "@/api/authApi";
 import { SingInInterface } from "@/interfaces/AuthInterface";
 import {
   Box,
@@ -8,7 +7,8 @@ import {
   Button,
   CircularProgress,
 } from "@mui/material";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { signIn } from "next-auth/react";
+
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
@@ -18,9 +18,8 @@ const Login = () => {
   const router = useRouter();
   const { redirectUrl } = router.query;
   const { enqueueSnackbar } = useSnackbar();
-  const queryClient = useQueryClient();
+
   const [loading, setLoading] = useState<boolean>(false);
-  const SignInMutate = useMutation(logIn);
   const [formValues, setFormValues] = useState<SingInInterface>({
     email: "",
     password: "",
@@ -33,20 +32,18 @@ const Login = () => {
   const handleSignIn = async () => {
     setLoading(true);
     try {
-      const payload = { ...formValues };
-      const response = await SignInMutate.mutateAsync({ payload });
-      if (response?.status === 200) {
-        localStorage.setItem("token", response?.data?.token);
-        queryClient.invalidateQueries(["GetCurrentUser"]);
+      const response = await signIn("credentials", {
+        ...formValues,
+        redirect: false,
+      });
+      if (response && !response.error) {
         enqueueSnackbar("Logged in", { variant: "success" });
         router.push(redirectUrl as string);
+      } else {
+        enqueueSnackbar(response?.error, { variant: "error" });
       }
-    } catch (err: any) {
+    } catch (err) {
       console.error(err);
-      if (err?.response?.status === 404) {
-        const errorMsg = err.response.data.error;
-        enqueueSnackbar(errorMsg, { variant: "error" });
-      }
     } finally {
       setLoading(false);
     }

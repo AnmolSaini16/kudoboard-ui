@@ -1,6 +1,8 @@
 import { NavHeader } from "@/components/common/NavHeader";
 import { HomePageContainer } from "@/components/home/HomePageContainer";
 import { GetServerSidePropsContext } from "next";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]";
 
 export default function Home({ isLoggedIn }: { isLoggedIn: boolean }) {
   return (
@@ -14,11 +16,8 @@ export default function Home({ isLoggedIn }: { isLoggedIn: boolean }) {
 export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
-  let isLoggedIn = false;
-  const authCookie = context?.req.cookies["access_token"] ?? null;
-  if (authCookie) {
-    isLoggedIn = true;
-  }
+  const session = await getServerSession(context.req, context.res, authOptions);
+  const isLoggedIn = !!session;
 
   return { props: { isLoggedIn } };
 };

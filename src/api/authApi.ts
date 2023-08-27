@@ -1,14 +1,7 @@
-import { RegisterInterface, SingInInterface } from "@/interfaces/AuthInterface";
+import { RegisterInterface } from "@/interfaces/AuthInterface";
 import { getData, postData } from "./commonAPI";
 import { useQuery } from "@tanstack/react-query";
-
-export const logIn = async ({ payload }: { payload: SingInInterface }) => {
-  return await postData("/api/auth/login", payload);
-};
-
-export const logOut = async () => {
-  return await postData("/api/auth/logout", {});
-};
+import { Session } from "next-auth";
 
 export const registerUser = async ({
   payload,
@@ -18,16 +11,14 @@ export const registerUser = async ({
   return await postData("/api/auth/register", payload);
 };
 
-export const getCurrentUser = () => {
-  const token =
-    typeof window !== "undefined" ? localStorage.getItem("token") : "";
+export const getCurrentUser = (session: Session | null) => {
   return useQuery(
     ["GetCurrentUser"],
     async () => await getData("/api/auth/getCurrentUser"),
     {
       staleTime: Infinity,
       refetchOnWindowFocus: false,
-      enabled: !!token,
+      enabled: !!session,
     }
   );
 };
