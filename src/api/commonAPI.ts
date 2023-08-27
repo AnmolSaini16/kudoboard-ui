@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getSession } from "next-auth/react";
 
-axios.defaults.withCredentials = true;
+axios.defaults.headers["Content-Type"] = "application/json";
 axios.defaults.baseURL =
   process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000/";
 
@@ -18,7 +18,6 @@ const getToken = async () => {
 
 export const getData = async (apiName: string) => {
   const token = await getToken();
-  console.log(token);
   return await axios.get(apiName, {
     headers: { Authorization: `Bearer ${token}` },
   });
