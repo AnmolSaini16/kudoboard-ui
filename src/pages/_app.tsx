@@ -26,7 +26,10 @@ export default function App({
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <CustomisedSnackbar>
-        <SessionProvider session={pageProps.session}>
+        <SessionProvider
+          session={pageProps.session}
+          baseUrl={process.env.NEXTAUTH_URL ?? "http://localhost:3000/"}
+        >
           <QueryClientProvider client={queryClient}>
             <Hydrate state={pageProps.dehydratedState}>
               <NextNProgress />
