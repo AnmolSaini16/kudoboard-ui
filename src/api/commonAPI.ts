@@ -1,7 +1,6 @@
 import axios from "axios";
 import { getSession } from "next-auth/react";
 
-axios.defaults.headers["Content-Type"] = "application/json";
 axios.defaults.baseURL =
   process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000/";
 
