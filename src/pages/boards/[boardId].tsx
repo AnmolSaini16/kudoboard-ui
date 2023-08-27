@@ -16,17 +16,9 @@ const Board = ({
   boardId: string;
   isLoggedIn: boolean;
 }) => {
-  const { data, isLoading: boardLoading } = useGetBoardData(boardId);
-  const boardData: IBoard = data?.data;
-
   return (
     <>
-      <BoardContainer
-        board={boardData}
-        boardLoading={boardLoading}
-        boardId={boardId}
-        isLoggedIn={isLoggedIn}
-      />
+      <BoardContainer boardId={boardId} isLoggedIn={isLoggedIn} />
     </>
   );
 };

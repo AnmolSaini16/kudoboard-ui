@@ -19,7 +19,6 @@ export const useGetBoardData = (boardId: string) => {
   return useQuery({
     queryKey: ["GetBoardData", boardId],
     queryFn: async () => await getData(`/api/board/${boardId}`),
-    refetchOnWindowFocus: false,
   });
 };
 

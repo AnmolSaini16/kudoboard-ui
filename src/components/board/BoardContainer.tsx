@@ -8,22 +8,19 @@ import { CheckPermission } from "../common/CheckPermission";
 import { useRouter } from "next/router";
 import ViewOnlyBoard from "./ViewOnlyBoard";
 import { NavHeader } from "../common/NavHeader";
+import { useGetBoardData } from "@/api/boardApi";
 
 interface Props {
-  board: IBoard;
-  boardLoading: boolean;
   boardId: string;
   isLoggedIn: boolean;
 }
-export const BoardContainer: React.FC<Props> = ({
-  board,
-  boardLoading,
-  boardId,
-  isLoggedIn,
-}) => {
+export const BoardContainer: React.FC<Props> = ({ boardId, isLoggedIn }) => {
   const router = useRouter();
   const { view } = router.query;
   const viewOnly = view ?? null;
+  const { data, isLoading: boardLoading } = useGetBoardData(boardId);
+  const board: IBoard = data?.data;
+
   const [addPost, setShowAddPost] = useState<boolean>(false);
   const [showViewOnlyIntro, setShowViewOnlyIntro] = useState<boolean>(
     !!viewOnly
