@@ -41,7 +41,7 @@ export const getServerSideProps = async (
   try {
     await queryClient.fetchQuery(["GetBoardData", boardId], async () => {
       const data = await axios.get(
-        `${process.env.NEXTAUTH_URL || "http://localhost:5000"}` +
+        `${process.env.BACKEND_URL || "http://localhost:5000"}` +
           `/api/board/${boardId}`
       );
       return data?.data;

@@ -23,7 +23,7 @@ export const authOptions: NextAuthOptions = {
         };
         const payload = { email, password };
         const response = await axios.post(
-          `${process.env.NEXTAUTH_URL || "http://localhost:5000"}` +
+          `${process.env.BACKEND_URL || "http://localhost:5000"}` +
             "/api/auth/login",
           payload
         );
