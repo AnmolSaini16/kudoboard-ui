@@ -9,11 +9,9 @@ import {
   ListItemIcon,
   Card,
   CardContent,
-  CardActions,
   IconButton,
   CardMedia,
   ListItemText,
-  Link,
 } from "@mui/material";
 import React, { useContext, useState } from "react";
 import { dateFormatter } from "../common/utils";
@@ -26,6 +24,7 @@ import { deleteBoard, useGetAllBoards } from "@/api/boardApi";
 import { useSnackbar } from "notistack";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { CustomModel } from "../common/CustomModel";
+import Link from "next/link";
 
 const Dashboard = () => {
   const { enqueueSnackbar } = useSnackbar();

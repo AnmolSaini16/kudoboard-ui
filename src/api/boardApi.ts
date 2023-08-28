@@ -16,10 +16,11 @@ export const createBoard = async ({
 };
 
 export const useGetBoardData = (boardId: string) => {
-  return useQuery({
-    queryKey: ["GetBoardData", boardId],
-    queryFn: async () => await getData(`/api/board/${boardId}`),
-  });
+  return useQuery(
+    ["GetBoardData", boardId],
+    async () => await getData(`/api/board/${boardId}`),
+    { refetchOnWindowFocus: false }
+  );
 };
 
 export const useGetAllBoards = (id: string) => {

@@ -55,7 +55,6 @@ export const getServerSideProps = async (
 
   return {
     props: {
-      dehydratedState: dehydrate(queryClient),
       boardId,
       isLoggedIn,
     },
