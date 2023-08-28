@@ -74,21 +74,28 @@ export const BoardContainer: React.FC<Props> = ({ boardId, isLoggedIn }) => {
                       justifyContent: "flex-end",
                     }}
                   >
-                    <Button color="info" variant="outlined">
-                      <RemoveRedEyeIcon />
-                    </Button>
-
-                    <Box ml={1}>
-                      <Button variant="outlined" color="info">
-                        <EditIcon />
-                      </Button>
-                    </Box>
-
-                    <Box ml={1} mr={5}>
-                      <Button variant="outlined" color="info">
-                        <SendIcon />
-                      </Button>
-                    </Box>
+                    {boardLoading ? (
+                      <Box mr={5}>
+                        <Skeleton width={200} height={40} animation="wave" />
+                      </Box>
+                    ) : (
+                      <>
+                        {" "}
+                        <Button color="info" variant="outlined">
+                          <RemoveRedEyeIcon />
+                        </Button>
+                        <Box ml={1}>
+                          <Button variant="outlined" color="info">
+                            <EditIcon />
+                          </Button>
+                        </Box>
+                        <Box ml={1} mr={5}>
+                          <Button variant="outlined" color="info">
+                            <SendIcon />
+                          </Button>
+                        </Box>
+                      </>
+                    )}
                   </Box>
                 </Grid>
 
