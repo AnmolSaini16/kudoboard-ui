@@ -1,5 +1,12 @@
 import { IBoard } from "@/interfaces/BoardInterface";
-import { Box, Button, Skeleton, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Grid,
+  IconButton,
+  Skeleton,
+  Typography,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import React, { useState } from "react";
 import { AddPost } from "./AddPost";
@@ -9,6 +16,9 @@ import { useRouter } from "next/router";
 import ViewOnlyBoard from "./ViewOnlyBoard";
 import { NavHeader } from "../common/NavHeader";
 import { useGetBoardData } from "@/api/boardApi";
+import EditIcon from "@mui/icons-material/Edit";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import SendIcon from "@mui/icons-material/Send";
 
 interface Props {
   boardId: string;
@@ -49,26 +59,70 @@ export const BoardContainer: React.FC<Props> = ({ boardId, isLoggedIn }) => {
                 borderBottomRightRadius: 16,
                 position: "relative",
               }}
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
             >
-              {boardLoading ? (
-                <Skeleton width={300} height={100} animation="wave" />
-              ) : (
-                <>
-                  <Typography
-                    color="#fff"
-                    fontSize={36}
-                    fontWeight={600}
-                    textAlign="center"
+              <Grid
+                container
+                alignItems="center"
+                justifyContent="center"
+                height={205}
+              >
+                <Grid item xs={12}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "flex-end",
+                    }}
                   >
-                    {board?.displayName}
-                  </Typography>
+                    <Button color="info" variant="outlined">
+                      <RemoveRedEyeIcon />
+                    </Button>
+
+                    <Box ml={1}>
+                      <Button variant="outlined" color="info">
+                        <EditIcon />
+                      </Button>
+                    </Box>
+
+                    <Box ml={1} mr={5}>
+                      <Button variant="outlined" color="info">
+                        <SendIcon />
+                      </Button>
+                    </Box>
+                  </Box>
+                </Grid>
+
+                <Grid item xs={12} sx={{ marginBottom: 2 }}>
+                  {boardLoading ? (
+                    <Box>
+                      <Skeleton
+                        width={300}
+                        height={100}
+                        sx={{ margin: "0 auto" }}
+                        animation="wave"
+                      />
+                    </Box>
+                  ) : (
+                    <>
+                      <Typography
+                        color="#fff"
+                        fontSize={{ xs: 30, sm: 36 }}
+                        fontWeight={600}
+                        textAlign="center"
+                      >
+                        {board?.displayName}
+                      </Typography>
+                    </>
+                  )}
+                </Grid>
+                <Grid item xs={7}>
                   <CheckPermission
                     render={
                       <Button
-                        sx={{ position: "absolute", bottom: -16, fontSize: 20 }}
+                        sx={{
+                          fontSize: 18,
+                          borderRadius: 8,
+                        }}
                         variant="contained"
                         onClick={() => setShowAddPost(true)}
                       >
@@ -76,8 +130,8 @@ export const BoardContainer: React.FC<Props> = ({ boardId, isLoggedIn }) => {
                       </Button>
                     }
                   />
-                </>
-              )}
+                </Grid>
+              </Grid>
             </Box>
             <Box
               sx={{

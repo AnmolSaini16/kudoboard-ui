@@ -59,9 +59,10 @@ const ViewOnlyBoard = ({
               </Typography>
               <Box textAlign="center" mt={4}>
                 <Button
-                  variant="contained"
-                  color="primary"
+                  variant="outlined"
+                  color="info"
                   onClick={() => handleClose()}
+                  sx={{ fontSize: 20 }}
                 >
                   View Kudoboard
                 </Button>

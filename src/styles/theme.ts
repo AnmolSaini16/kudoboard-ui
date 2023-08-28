@@ -11,6 +11,9 @@ const theme = createTheme({
       main: "#393535b9",
       dark: "#fff",
     },
+    info: {
+      main: "#fff",
+    },
   },
   typography: {
     button: {
