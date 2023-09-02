@@ -37,6 +37,8 @@ export const authOptions: NextAuthOptions = {
             throw new Error(response?.data?.error);
           }
         }
+
+        return null;
       },
     }),
   ],
