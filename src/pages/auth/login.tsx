@@ -48,7 +48,8 @@ const Login = () => {
       } else {
         enqueueSnackbar(response?.error, { variant: "error" });
       }
-    } catch (err) {
+    } catch (err: any) {
+      enqueueSnackbar(err, { variant: "error" });
       console.error(err);
     } finally {
       setLoading(false);
