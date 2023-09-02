@@ -39,8 +39,8 @@ export const BoardContainer: React.FC<Props> = ({ boardId, isLoggedIn }) => {
   const [editTitle, setEditTitle] = useState<boolean>(false);
   const [deliverBoard, setDilverBoard] = useState<boolean>(false);
   const shareLink = `${
-    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
-  }/boards/${boardId}?view=true`;
+    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000/"
+  }boards/${boardId}?view=true`;
 
   useEffect(() => {
     setShowViewOnlyIntro(viewOnly);
