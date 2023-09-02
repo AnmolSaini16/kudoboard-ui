@@ -48,9 +48,9 @@ export const CreateBoardForm = () => {
       const response = await createBoardMutation.mutateAsync({ payload });
       if (response?.status === 200) {
         const boardId = response.data?.board.boardId;
-        router.push(`/boards/${boardId}`);
+        queryClient.invalidateQueries(["GetAllBoards"]);
         enqueueSnackbar(response?.data?.status, { variant: "success" });
-        queryClient.removeQueries(["GetAllBoardData", userData?._id]);
+        router.push(`/boards/${boardId}`);
       }
     } catch (err) {
       console.error(err);

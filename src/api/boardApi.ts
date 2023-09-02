@@ -19,13 +19,14 @@ export const useGetBoardData = (boardId: string) => {
   return useQuery(
     ["GetBoardData", boardId],
     async () => await getData(`/api/board/${boardId}`),
-    { refetchOnWindowFocus: false }
+    { refetchOnWindowFocus: false, staleTime: Infinity }
   );
 };
 
-export const useGetAllBoards = (id: string | undefined) => {
+export const useGetAllBoards = () => {
   return useQuery(["GetAllBoards"], async () => await getData("/api/board"), {
     refetchOnWindowFocus: false,
+    staleTime: Infinity,
   });
 };
 
