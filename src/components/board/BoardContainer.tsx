@@ -23,6 +23,7 @@ import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import SendIcon from "@mui/icons-material/Send";
 import { CustomModel } from "../common/CustomModel";
 import { useSnackbar } from "notistack";
+import { EditBoardTitle } from "./EditBoardTitle";
 interface Props {
   boardId: string;
   isLoggedIn: boolean;
@@ -231,6 +232,13 @@ export const BoardContainer: React.FC<Props> = ({ boardId, isLoggedIn }) => {
               </Box>
             </>
           }
+        />
+      )}
+      {editTitle && (
+        <EditBoardTitle
+          open={editTitle}
+          handleClose={() => setEditTitle(false)}
+          board={board}
         />
       )}
     </>

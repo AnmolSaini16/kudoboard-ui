@@ -15,6 +15,14 @@ export const createBoard = async ({
   return await postData("/api/board/createBoard", payload);
 };
 
+export const editBoardDisplayName = async ({
+  payload,
+}: {
+  payload: { boardId: string; displayName: string };
+}) => {
+  return await postData("/api/board/editDisplayName", payload);
+};
+
 export const useGetBoardData = (boardId: string) => {
   return useQuery(
     ["GetBoardData", boardId],
