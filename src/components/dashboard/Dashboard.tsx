@@ -54,8 +54,8 @@ const Dashboard = () => {
   const handleShareClick = () => {
     navigator.clipboard.writeText(
       `${
-        process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
-      }/boards/${boardId}?view=true`
+        process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000/"
+      }boards/${boardId}?view=true`
     );
     enqueueSnackbar("Link copied", { variant: "success" });
     handleClose();
