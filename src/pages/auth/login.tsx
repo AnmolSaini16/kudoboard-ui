@@ -16,9 +16,11 @@ import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
 import { authOptions } from "../api/auth/[...nextauth]";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Login = () => {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { redirectUrl } = router.query;
   const { enqueueSnackbar } = useSnackbar();
 
@@ -41,6 +43,7 @@ const Login = () => {
       });
       if (response && !response.error) {
         enqueueSnackbar("Logged in", { variant: "success" });
+        queryClient.invalidateQueries(["GetAllBoards"]);
         router.push(redirectUrl as string);
       } else {
         enqueueSnackbar(response?.error, { variant: "error" });
