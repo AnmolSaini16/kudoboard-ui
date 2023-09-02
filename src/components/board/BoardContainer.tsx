@@ -5,10 +5,12 @@ import {
   Grid,
   IconButton,
   Skeleton,
+  TextField,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AddPost } from "./AddPost";
 import { CardComponent } from "./CardComponent";
 import { CheckPermission } from "../common/CheckPermission";
@@ -19,21 +21,35 @@ import { useGetBoardData } from "@/api/boardApi";
 import EditIcon from "@mui/icons-material/Edit";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import SendIcon from "@mui/icons-material/Send";
-
+import { CustomModel } from "../common/CustomModel";
+import { useSnackbar } from "notistack";
 interface Props {
   boardId: string;
   isLoggedIn: boolean;
 }
 export const BoardContainer: React.FC<Props> = ({ boardId, isLoggedIn }) => {
+  const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
   const { view } = router.query;
-  const viewOnly = view ?? null;
+  const viewOnly = Boolean(view ?? null);
   const { data, isLoading: boardLoading } = useGetBoardData(boardId);
   const board: IBoard = data;
   const [addPost, setShowAddPost] = useState<boolean>(false);
-  const [showViewOnlyIntro, setShowViewOnlyIntro] = useState<boolean>(
-    !!viewOnly
-  );
+  const [showViewOnlyIntro, setShowViewOnlyIntro] = useState<boolean>(false);
+  const [editTitle, setEditTitle] = useState<boolean>(false);
+  const [deliverBoard, setDilverBoard] = useState<boolean>(false);
+  const shareLink = `${
+    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
+  }/boards/${boardId}?view=true`;
+
+  useEffect(() => {
+    setShowViewOnlyIntro(viewOnly);
+  }, [viewOnly]);
+
+  const handleShareClick = () => {
+    navigator.clipboard.writeText(shareLink);
+    enqueueSnackbar("Link copied", { variant: "success" });
+  };
 
   return (
     <>
@@ -79,19 +95,54 @@ export const BoardContainer: React.FC<Props> = ({ boardId, isLoggedIn }) => {
                       </Box>
                     ) : (
                       <>
-                        {" "}
-                        <Button color="info" variant="outlined">
-                          <RemoveRedEyeIcon />
-                        </Button>
+                        {!viewOnly ? (
+                          <Tooltip title="View as recipient">
+                            <Button
+                              color="info"
+                              variant="outlined"
+                              onClick={() =>
+                                router.push(
+                                  `/boards/${board.boardId}?view=true`
+                                )
+                              }
+                            >
+                              <RemoveRedEyeIcon />
+                            </Button>
+                          </Tooltip>
+                        ) : (
+                          <Tooltip title="View as editor">
+                            <Button
+                              color="info"
+                              variant="outlined"
+                              onClick={() =>
+                                router.push(`/boards/${board.boardId}`)
+                              }
+                            >
+                              <RemoveRedEyeIcon />
+                            </Button>
+                          </Tooltip>
+                        )}
                         <Box ml={1}>
-                          <Button variant="outlined" color="info">
-                            <EditIcon />
-                          </Button>
+                          <Tooltip title="Edit board title">
+                            <Button
+                              variant="outlined"
+                              color="info"
+                              onClick={() => setEditTitle(true)}
+                            >
+                              <EditIcon />
+                            </Button>
+                          </Tooltip>
                         </Box>
                         <Box ml={1} mr={5}>
-                          <Button variant="outlined" color="info">
-                            <SendIcon />
-                          </Button>
+                          <Tooltip title="Deliver board">
+                            <Button
+                              variant="outlined"
+                              color="info"
+                              onClick={() => setDilverBoard(true)}
+                            >
+                              <SendIcon />
+                            </Button>
+                          </Tooltip>
                         </Box>
                       </>
                     )}
@@ -156,6 +207,30 @@ export const BoardContainer: React.FC<Props> = ({ boardId, isLoggedIn }) => {
           open={addPost}
           handleClose={() => setShowAddPost(false)}
           boardId={board?.boardId}
+        />
+      )}
+      {deliverBoard && (
+        <CustomModel
+          open={deliverBoard}
+          handleClose={() => setDilverBoard(false)}
+          dialogTitle="Share Kudoboard"
+          hideSubmit
+          dialogText={
+            <>
+              <Box width={400}>
+                <Typography sx={{ color: "black" }}>
+                  Copy the link below and share to {board.recipient}
+                </Typography>
+                <Box mt={2}>
+                  <TextField
+                    onClick={handleShareClick}
+                    value={shareLink}
+                    style={{ width: 400 }}
+                  />
+                </Box>
+              </Box>
+            </>
+          }
         />
       )}
     </>

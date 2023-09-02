@@ -52,7 +52,6 @@ const Dashboard = () => {
   };
 
   const handleShareClick = () => {
-    // Todo: change to deployed link
     navigator.clipboard.writeText(
       `${
         process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"

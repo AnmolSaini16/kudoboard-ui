@@ -38,7 +38,7 @@ const ViewOnlyBoard = ({
           <Card
             raised
             sx={{
-              width: 550,
+              width: 600,
               maxWidth: 600,
               minHeight: 300,
               backgroundColor: "#8bbab3",
@@ -46,6 +46,7 @@ const ViewOnlyBoard = ({
               alignItems: "center",
               justifyContent: "center",
               borderRadius: 4,
+              padding: 4,
             }}
           >
             <Box>

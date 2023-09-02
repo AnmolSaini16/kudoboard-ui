@@ -25,9 +25,10 @@ interface props {
   open: boolean;
   handleClose: () => void;
   dialogTitle: string;
-  dialogText: string;
-  handleSubmit: () => void;
+  dialogText: string | JSX.Element;
+  handleSubmit?: () => void;
   disableSubmit?: boolean;
+  hideSubmit?: boolean;
 }
 export const CustomModel: React.FC<props> = ({
   open,
@@ -36,6 +37,7 @@ export const CustomModel: React.FC<props> = ({
   handleSubmit,
   dialogText,
   disableSubmit = false,
+  hideSubmit = false,
 }) => {
   return (
     <Dialog
@@ -63,13 +65,16 @@ export const CustomModel: React.FC<props> = ({
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button
-          variant="contained"
-          disabled={disableSubmit}
-          onClick={handleSubmit}
-        >
-          Ok
-        </Button>
+        {!hideSubmit && (
+          <Button
+            variant="contained"
+            disabled={disableSubmit}
+            onClick={handleSubmit}
+          >
+            Ok
+          </Button>
+        )}
+
         <Button variant="contained" onClick={handleClose}>
           Cancel
         </Button>

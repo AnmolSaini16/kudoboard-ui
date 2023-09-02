@@ -22,6 +22,17 @@ const theme = createTheme({
     },
     fontFamily: "Segoe UI",
   },
+  components: {
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          backgroundColor: "#04BFFA",
+          color: "#fff",
+          fontSize: 12,
+        },
+      },
+    },
+  },
 });
 
 export default theme;
