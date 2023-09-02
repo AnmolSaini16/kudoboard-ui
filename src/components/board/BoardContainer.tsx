@@ -98,55 +98,65 @@ export const BoardContainer: React.FC<Props> = ({
                       </Box>
                     ) : (
                       <>
-                        {!viewOnly ? (
-                          <Tooltip title="View as recipient">
-                            <Button
-                              color="info"
-                              variant="outlined"
-                              onClick={() =>
-                                router.push(
-                                  `/boards/${board.boardId}?view=true`
-                                )
-                              }
-                            >
-                              <RemoveRedEyeIcon />
-                            </Button>
-                          </Tooltip>
-                        ) : (
-                          <Tooltip title="View as editor">
-                            <Button
-                              color="info"
-                              variant="outlined"
-                              onClick={() =>
-                                router.push(`/boards/${board.boardId}`)
-                              }
-                            >
-                              <RemoveRedEyeIcon />
-                            </Button>
-                          </Tooltip>
-                        )}
-                        <Box ml={1}>
-                          <Tooltip title="Edit board title">
-                            <Button
-                              variant="outlined"
-                              color="info"
-                              onClick={() => setEditTitle(true)}
-                            >
-                              <EditIcon />
-                            </Button>
-                          </Tooltip>
-                        </Box>
-                        <Box ml={1} mr={5}>
-                          <Tooltip title="Deliver board">
-                            <Button
-                              variant="outlined"
-                              color="info"
-                              onClick={() => setDilverBoard(true)}
-                            >
-                              <SendIcon />
-                            </Button>
-                          </Tooltip>
-                        </Box>
+                        {
+                          <CheckPermission
+                            checkAuth
+                            boardId={boardId}
+                            render={
+                              <>
+                                {!viewOnly ? (
+                                  <Tooltip title="View as recipient">
+                                    <Button
+                                      color="info"
+                                      variant="outlined"
+                                      onClick={() =>
+                                        router.push(
+                                          `/boards/${board.boardId}?view=true`
+                                        )
+                                      }
+                                    >
+                                      <RemoveRedEyeIcon />
+                                    </Button>
+                                  </Tooltip>
+                                ) : (
+                                  <Tooltip title="View as editor">
+                                    <Button
+                                      color="info"
+                                      variant="outlined"
+                                      onClick={() =>
+                                        router.push(`/boards/${board.boardId}`)
+                                      }
+                                    >
+                                      <RemoveRedEyeIcon />
+                                    </Button>
+                                  </Tooltip>
+                                )}
+                                <Box ml={1}>
+                                  <Tooltip title="Edit board title">
+                                    <Button
+                                      variant="outlined"
+                                      color="info"
+                                      onClick={() => setEditTitle(true)}
+                                    >
+                                      <EditIcon />
+                                    </Button>
+                                  </Tooltip>
+                                </Box>
+                                <Box ml={1} mr={5}>
+                                  <Tooltip title="Deliver board">
+                                    <Button
+                                      variant="outlined"
+                                      color="info"
+                                      onClick={() => setDilverBoard(true)}
+                                    >
+                                      <SendIcon />
+                                    </Button>
+                                  </Tooltip>
+                                </Box>
+                              </>
+                            }
+                          />
+                        }
                       </>
                     )}
                   </Box>
