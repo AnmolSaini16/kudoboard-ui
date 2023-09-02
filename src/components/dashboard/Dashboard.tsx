@@ -36,7 +36,7 @@ const Dashboard = () => {
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
 
   const deleteBoardMutate = useMutation(deleteBoard);
-  const { data, isLoading: boardDataLoading } = useGetAllBoards(userData?._id!);
+  const { data, isLoading: boardDataLoading } = useGetAllBoards(userData?._id);
   const allBoardsData: IBoard[] = data?.data.boards;
 
   const open = Boolean(anchorEl);

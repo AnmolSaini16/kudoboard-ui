@@ -23,14 +23,10 @@ export const useGetBoardData = (boardId: string) => {
   );
 };
 
-export const useGetAllBoards = (id: string) => {
-  return useQuery(
-    ["GetAllBoards", id],
-    async () => await getData("/api/board"),
-    {
-      refetchOnWindowFocus: false,
-    }
-  );
+export const useGetAllBoards = (id: string | undefined) => {
+  return useQuery(["GetAllBoards"], async () => await getData("/api/board"), {
+    refetchOnWindowFocus: false,
+  });
 };
 
 export const deleteBoard = async ({ boardId }: { boardId: string }) => {
