@@ -20,7 +20,7 @@ const theme = createTheme({
       textTransform: "none",
       fontSize: "16px",
     },
-    fontFamily: "Segoe UI",
+    fontFamily: "sans-serif",
   },
   components: {
     MuiTooltip: {

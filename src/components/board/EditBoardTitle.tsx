@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { CustomModel } from "../common/CustomModel";
 import { IBoard } from "@/interfaces/BoardInterface";
 import {
   Dialog,

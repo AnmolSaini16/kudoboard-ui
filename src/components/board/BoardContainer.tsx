@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   Grid,
-  IconButton,
   Skeleton,
   TextField,
   Tooltip,
@@ -27,16 +26,19 @@ import { EditBoardTitle } from "./EditBoardTitle";
 interface Props {
   boardId: string;
   isLoggedIn: boolean;
+  viewOnly: boolean;
 }
-export const BoardContainer: React.FC<Props> = ({ boardId, isLoggedIn }) => {
+export const BoardContainer: React.FC<Props> = ({
+  boardId,
+  isLoggedIn,
+  viewOnly,
+}) => {
   const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
-  const { view } = router.query;
-  const viewOnly = Boolean(view ?? null);
   const { data, isLoading: boardLoading } = useGetBoardData(boardId);
   const board: IBoard = data;
   const [addPost, setShowAddPost] = useState<boolean>(false);
-  const [showViewOnlyIntro, setShowViewOnlyIntro] = useState<boolean>(false);
+  const [showViewOnlyIntro, setShowViewOnlyIntro] = useState<boolean>(viewOnly);
   const [editTitle, setEditTitle] = useState<boolean>(false);
   const [deliverBoard, setDilverBoard] = useState<boolean>(false);
   const shareLink = `${

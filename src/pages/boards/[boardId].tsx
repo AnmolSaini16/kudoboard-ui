@@ -1,10 +1,7 @@
-import { useGetBoardData } from "@/api/boardApi";
 import { GetServerSidePropsContext } from "next";
 import React from "react";
 import { QueryClient, dehydrate } from "@tanstack/react-query";
 import { BoardContainer } from "@/components/board/BoardContainer";
-import { IBoard } from "@/interfaces/BoardInterface";
-import { NavHeader } from "@/components/common/NavHeader";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]";
 import axios from "axios";
@@ -12,13 +9,19 @@ import axios from "axios";
 const Board = ({
   boardId,
   isLoggedIn,
+  viewOnly,
 }: {
   boardId: string;
   isLoggedIn: boolean;
+  viewOnly: boolean;
 }) => {
   return (
     <>
-      <BoardContainer boardId={boardId} isLoggedIn={isLoggedIn} />
+      <BoardContainer
+        boardId={boardId}
+        isLoggedIn={isLoggedIn}
+        viewOnly={viewOnly}
+      />
     </>
   );
 };
@@ -31,8 +34,9 @@ export const getServerSideProps = async (
   const session = await getServerSession(context.req, context.res, authOptions);
   const isLoggedIn = !!session;
 
-  const boardId = context?.query?.boardId;
+  const { boardId, view } = context?.query;
   const queryClient = new QueryClient();
+  const viewOnly = Boolean(view);
 
   try {
     await queryClient.fetchQuery(["GetBoardData", boardId], async () => {
@@ -58,6 +62,7 @@ export const getServerSideProps = async (
       dehydratedState: dehydrate(queryClient),
       boardId,
       isLoggedIn,
+      viewOnly,
     },
   };
 };

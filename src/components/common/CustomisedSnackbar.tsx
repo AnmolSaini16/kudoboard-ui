@@ -6,7 +6,7 @@ export const CustomisedSnackbar = ({ children }: { children: JSX.Element }) => {
     <SnackbarProvider
       autoHideDuration={3000}
       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-      style={{ fontFamily: "Segoe UI" }}
+      style={{ fontFamily: "sans-serif" }}
     >
       {children}
     </SnackbarProvider>
