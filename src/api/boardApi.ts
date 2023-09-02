@@ -18,7 +18,10 @@ export const createBoard = async ({
 export const useGetBoardData = (boardId: string) => {
   return useQuery(
     ["GetBoardData", boardId],
-    async () => await getData(`/api/board/${boardId}`),
+    async () => {
+      const data = await getData(`/api/board/${boardId}`);
+      return data?.data;
+    },
     { refetchOnWindowFocus: false, staleTime: Infinity }
   );
 };

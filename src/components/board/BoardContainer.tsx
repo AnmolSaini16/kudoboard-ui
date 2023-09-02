@@ -29,7 +29,7 @@ export const BoardContainer: React.FC<Props> = ({ boardId, isLoggedIn }) => {
   const { view } = router.query;
   const viewOnly = view ?? null;
   const { data, isLoading: boardLoading } = useGetBoardData(boardId);
-  const board: IBoard = data?.data;
+  const board: IBoard = data;
   const [addPost, setShowAddPost] = useState<boolean>(false);
   const [showViewOnlyIntro, setShowViewOnlyIntro] = useState<boolean>(
     !!viewOnly
