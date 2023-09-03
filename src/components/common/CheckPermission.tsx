@@ -24,10 +24,10 @@ export const CheckPermission = ({
   }, [userData, boardId]);
 
   const getComponent = () => {
-    if (!checkAuth) {
-      return !viewOnly ? <>{render}</> : <>{null}</>;
-    }
-    return userIsCreator ? <>{render}</> : <>{null}</>;
+    if (viewOnly && !checkAuth) return null;
+    if (checkAuth) return userIsCreator ? render : null;
+
+    return render;
   };
   return <>{getComponent()}</>;
 };

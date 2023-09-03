@@ -135,16 +135,22 @@ export const CardComponent = ({
           </ListItemIcon>
           <ListItemText>Edit message</ListItemText>
         </MenuItem>
-        <MenuItem
-          onClick={() => {
-            setShowDeleteModal(true), handleClose();
-          }}
-        >
-          <ListItemIcon>
-            <DeleteIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Delete</ListItemText>
-        </MenuItem>
+        <CheckPermission
+          checkAuth
+          boardId={board.boardId}
+          render={
+            <MenuItem
+              onClick={() => {
+                setShowDeleteModal(true), handleClose();
+              }}
+            >
+              <ListItemIcon>
+                <DeleteIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText>Delete</ListItemText>
+            </MenuItem>
+          }
+        />
       </Menu>
       {showEdit && (
         <EditPost
