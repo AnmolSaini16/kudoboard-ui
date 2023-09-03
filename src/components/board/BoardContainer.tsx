@@ -23,6 +23,8 @@ import SendIcon from "@mui/icons-material/Send";
 import { CustomModel } from "../common/CustomModel";
 import { useSnackbar } from "notistack";
 import { EditBoardTitle } from "./EditBoardTitle";
+import Confetti from "react-confetti";
+import useWindowDimensions from "@/hooks/useWindowDimensions";
 interface Props {
   boardId: string;
   isLoggedIn: boolean;
@@ -35,32 +37,49 @@ export const BoardContainer: React.FC<Props> = ({
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
+  const { width, height } = useWindowDimensions();
   const { data, isLoading: boardLoading } = useGetBoardData(boardId);
   const board: IBoard = data;
   const [addPost, setShowAddPost] = useState<boolean>(false);
   const [showViewOnlyIntro, setShowViewOnlyIntro] = useState<boolean>(viewOnly);
   const [editTitle, setEditTitle] = useState<boolean>(false);
   const [deliverBoard, setDilverBoard] = useState<boolean>(false);
+  const [confettiRun, setConfettiRun] = useState(false);
   const shareLink = `${
     process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000/"
   }boards/${boardId}?view=true`;
-
-  useEffect(() => {
-    setShowViewOnlyIntro(viewOnly);
-  }, [viewOnly]);
 
   const handleShareClick = () => {
     navigator.clipboard.writeText(shareLink);
     enqueueSnackbar("Link copied", { variant: "success" });
   };
 
+  useEffect(() => {
+    setShowViewOnlyIntro(viewOnly);
+  }, [viewOnly]);
+
+  console.log(confettiRun);
+
   return (
     <>
+      {confettiRun && (
+        <Confetti
+          width={width - 20}
+          height={height}
+          numberOfPieces={400}
+          recycle={false}
+          run={confettiRun}
+          onConfettiComplete={() => setConfettiRun(false)}
+        />
+      )}
+
       <Box>
         {showViewOnlyIntro ? (
           <ViewOnlyBoard
             board={board}
-            handleClose={() => setShowViewOnlyIntro(false)}
+            handleClose={() => {
+              setShowViewOnlyIntro(false), setConfettiRun(true);
+            }}
           />
         ) : (
           <>

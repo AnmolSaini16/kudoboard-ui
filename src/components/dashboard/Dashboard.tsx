@@ -55,7 +55,7 @@ const Dashboard = () => {
     navigator.clipboard.writeText(
       `${
         process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000/"
-      }boards/${boardId}?view=true`
+      }boards/${boardId}`
     );
     enqueueSnackbar("Link copied", { variant: "success" });
     handleClose();

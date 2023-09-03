@@ -1,6 +1,6 @@
 import { IBoard } from "@/interfaces/BoardInterface";
 import { Box, Button, Card, Slide, Typography } from "@mui/material";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const ViewOnlyBoard = ({
   board,
@@ -10,6 +10,15 @@ const ViewOnlyBoard = ({
   handleClose: () => void;
 }) => {
   const containerRef = useRef(null);
+  const [playAnimation, setPlayAnimation] = useState<boolean>(false);
+
+  useEffect(() => {
+    const animationTimer = setTimeout(() => {
+      setPlayAnimation(true);
+    }, 500);
+
+    return () => clearTimeout(animationTimer);
+  });
   return (
     <Box
       sx={{
@@ -29,7 +38,7 @@ const ViewOnlyBoard = ({
       >
         <Slide
           direction="up"
-          in={!!board}
+          in={playAnimation}
           mountOnEnter
           unmountOnExit
           timeout={{ enter: 800 }}
