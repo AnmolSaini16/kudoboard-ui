@@ -76,15 +76,17 @@ export const CardComponent = ({
             <CircularProgress color="primary" />
           </Box>
         ) : (
-          <Masonry columns={4} spacing={3}>
+          <Masonry columns={3} spacing={3}>
             {board?.cards.map((card: ICard) => (
               <Card
                 raised
-                sx={{ minWidth: { xs: "100%", sm: 250 } }}
+                sx={{ minWidth: { xs: "100%", sm: 350 } }}
                 key={card._id}
               >
-                <CardContent sx={{ padding: 2 }}>
-                  <Typography gutterBottom>{card.msg}</Typography>
+                <CardContent sx={{ padding: 3 }}>
+                  <Typography gutterBottom textAlign={"justify"}>
+                    {card.msg}
+                  </Typography>
                   <Box
                     display="flex"
                     alignItems="center"
