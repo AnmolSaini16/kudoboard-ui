@@ -84,9 +84,7 @@ export const CardComponent = ({
                 key={card._id}
               >
                 <CardContent sx={{ padding: 2 }}>
-                  <Typography fontFamily="cursive" gutterBottom>
-                    {card.msg}
-                  </Typography>
+                  <Typography gutterBottom>{card.msg}</Typography>
                   <Box
                     display="flex"
                     alignItems="center"
