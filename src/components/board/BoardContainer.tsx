@@ -58,8 +58,6 @@ export const BoardContainer: React.FC<Props> = ({
     setShowViewOnlyIntro(viewOnly);
   }, [viewOnly]);
 
-  console.log(confettiRun);
-
   return (
     <>
       {confettiRun && (
