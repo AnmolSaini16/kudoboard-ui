@@ -8,14 +8,14 @@ import React, { useEffect, useState } from "react";
 export const RootContainer = ({ children }: { children: JSX.Element }) => {
   const { data: session } = useSession();
   const [userData, setUserData] = useState<IUser | null>(null);
-  const { data, isFetching, isLoading } = getCurrentUser(session);
+  const { data, isLoading } = getCurrentUser(session);
   const currentUser = data?.data;
 
   useEffect(() => {
     if (currentUser && !currentUser?.error && !isLoading) {
       setUserData(currentUser);
-    }
-  }, [currentUser, isFetching]);
+    } else setUserData(null);
+  }, [currentUser]);
 
   return (
     <Box sx={{ textDecoration: "none" }}>
