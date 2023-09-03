@@ -25,6 +25,7 @@ const ViewOnlyBoard = ({
         height: "100vh",
         width: "100%",
         backgroundImage: "url(../../board-bg.jpg)",
+        padding: "0 16px",
       }}
     >
       <Box
@@ -60,10 +61,10 @@ const ViewOnlyBoard = ({
           >
             <Box>
               <Typography
-                variant="h3"
                 fontWeight={600}
                 color="#fff"
                 textAlign="center"
+                fontSize={{ xs: "30px", sm: "36px" }}
               >
                 {board?.displayName}
               </Typography>
@@ -72,7 +73,7 @@ const ViewOnlyBoard = ({
                   variant="outlined"
                   color="info"
                   onClick={() => handleClose()}
-                  sx={{ fontSize: 20 }}
+                  sx={{ fontSize: 18 }}
                 >
                   View Kudoboard
                 </Button>
