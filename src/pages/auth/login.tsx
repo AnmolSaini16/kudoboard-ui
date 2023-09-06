@@ -41,6 +41,7 @@ const Login = () => {
         ...formValues,
         redirect: false,
       });
+      console.log(response);
       if (response && !response.error) {
         enqueueSnackbar("Logged in", { variant: "success" });
         queryClient.invalidateQueries(["GetAllBoards"]);
