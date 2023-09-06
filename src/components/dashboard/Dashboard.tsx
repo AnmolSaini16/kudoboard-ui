@@ -113,7 +113,10 @@ const Dashboard = () => {
           </Box>
         ) : (
           allBoardsData?.map((board) => (
-            <Card sx={{ margin: "20px auto", maxWidth: 800, display: "flex" }}>
+            <Card
+              sx={{ margin: "20px auto", maxWidth: 800, display: "flex" }}
+              key={board.boardId}
+            >
               <CardMedia
                 component="img"
                 sx={{ width: { sm: 200, xs: 150 } }}
